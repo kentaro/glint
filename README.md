@@ -1,6 +1,24 @@
 # Firebomber [![BuildStatus](https://secure.travis-ci.org/kentaro/firebomber.png)](http://travis-ci.org/kentaro/firebomber)
 
-TODO: Write a gem description
+Firebomber is a library which allows you to fire arbitrary TCP server processes programatically and ensures the processes are shutdown when your code exit.
+
+It's useful when you want to test your code against real TCP server processes.
+
+## Usage
+
+```ruby
+server = Firebomber::Server.new do |port|
+  # Execute target server process
+  exec command, args
+end
+
+# Test your code against the server process
+client = MyClient.new('127.0.0.1', server.port)
+client.do_something
+
+exit
+# The process executed above will be shutdown here.
+```
 
 ## Installation
 
@@ -16,9 +34,10 @@ Or install it yourself as:
 
     $ gem install firebomber
 
-## Usage
+## See Also
 
-TODO: Write usage instructions here
+  * [Test::TCP](https://metacpan.org/module/Test::TCP)
+    * This library is a port of Test::TCP for Perl.
 
 ## Contributing
 
