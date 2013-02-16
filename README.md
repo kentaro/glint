@@ -1,4 +1,4 @@
-# Firebomber
+# Firebomber [![BuildStatus](https://secure.travis-ci.org/kentaro/firebomber.png)](http://travis-ci.org/kentaro/firebomber)
 
 TODO: Write a gem description
 
