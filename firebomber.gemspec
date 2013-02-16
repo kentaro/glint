@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Firebomber::VERSION
   spec.authors       = ["Kentaro Kuribayashi"]
   spec.email         = ["kentarok@gmail.com"]
-  spec.description   = %q{Firebombs server process for tests.}
-  spec.summary       = %q{Firebombs server process for tests.}
+  spec.description   = %q{Firebomber is a library which allows you to fire arbitrary server processes programatically and ensures the processes are shutdown when your code exit}
+  spec.summary       = %q{Firebombs arbitrary server processs for tests.}
   spec.homepage      = "http://github.com/kentaro/firebomber"
   spec.license       = "MIT"
 

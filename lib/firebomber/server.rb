@@ -22,14 +22,14 @@ module Firebomber
         exit 0
       end
 
-      Firebomber::Util.wait_port(port)
+      Util.wait_port(port)
     end
 
     def stop
       if pid == Process.pid && child_pid
         Process.kill(:TERM, child_pid)
         Process.waitpid(child_pid)
-        child_pid = nil
+        self.child_pid = nil
       end
     end
   end

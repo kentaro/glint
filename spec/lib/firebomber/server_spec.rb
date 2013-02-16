@@ -56,5 +56,22 @@ module Firebomber
         expect(server.child_pid).to be_true
       }
     end
+
+    describe '#stop' do
+      let(:server) {
+        server = Firebomber::Server.new do |port|
+          exec File.expand_path("../../../bin/server.rb", __FILE__), port.to_s
+        end
+        server.start
+        server
+      }
+      let(:child_pid) { server.child_pid }
+
+      before { server.stop }
+
+      it {
+        expect(server.child_pid).to be_nil
+      }
+    end
   end
 end
