@@ -13,6 +13,7 @@ module Firebomber
       @block = block
       @pid   = Process.pid
 
+      ObjectSpace.define_finalizer(self) { stop }
     end
 
     def start
@@ -21,12 +22,11 @@ module Firebomber
         exit 0
       end
 
-      ObjectSpace.define_finalizer(self) { stop }
       Firebomber::Util.wait_port(port)
     end
 
     def stop
-      if self.child_pid
+      if pid == Process.pid && child_pid
         Process.kill(:TERM, child_pid)
         Process.waitpid(child_pid)
         child_pid = nil
