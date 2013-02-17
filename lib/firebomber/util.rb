@@ -14,7 +14,7 @@ module Firebomber
         socket = TCPSocket.open('127.0.0.1', port)
         socket.close
         return true
-      rescue Errno::ECONNREFUSED => error
+      rescue Errno::ECONNREFUSED
         return false
       end
     end
