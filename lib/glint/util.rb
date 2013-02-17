@@ -1,6 +1,6 @@
 require 'socket'
 
-module Firebomber
+module Glint
   module Util
     def self.empty_port
       s = TCPServer.open(0)

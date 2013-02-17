@@ -1,6 +1,6 @@
 require_relative 'util.rb'
 
-module Firebomber
+module Glint
   class Server
     attr_accessor :port, :block, :pid, :child_pid
 

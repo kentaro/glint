@@ -1,13 +1,13 @@
-# Firebomber [![BuildStatus](https://secure.travis-ci.org/kentaro/firebomber.png)](http://travis-ci.org/kentaro/firebomber)
+# Glint [![BuildStatus](https://secure.travis-ci.org/kentaro/glint.png)](http://travis-ci.org/kentaro/glint)
 
-Firebomber is a library which allows you to fire arbitrary TCP server processes programatically and ensures the processes are shutdown when your code exit.
+Glint is a library which allows you to fire arbitrary TCP server processes programatically and ensures the processes are shutdown when your code exit.
 
 It's useful when you want to test your code against real TCP server processes.
 
 ## Usage
 
 ```ruby
-server = Firebomber::Server.new do |port|
+server = Glint::Server.new do |port|
   # Execute target server process
   exec command, args
 end
@@ -25,7 +25,7 @@ exit
 
 Add this line to your application's Gemfile:
 
-    gem 'firebomber'
+    gem 'glint'
 
 And then execute:
 
@@ -33,7 +33,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install firebomber
+    $ gem install glint
 
 ## See Also
 
