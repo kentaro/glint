@@ -11,6 +11,7 @@ server = Firebomber::Server.new do |port|
   # Execute target server process
   exec command, args
 end
+server.start
 
 # Test your code against the server process
 client = MyClient.new('127.0.0.1', server.port)
