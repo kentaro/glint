@@ -2,7 +2,7 @@ require_relative 'util.rb'
 
 module Glint
   class Server
-    attr_accessor :port, :block, :pid, :child_pid
+    attr_accessor :port, :block, :pid, :child_pid, :on_stopped
 
     def initialize(port = nil, opts = {}, &block)
       unless block_given?
@@ -30,6 +30,7 @@ module Glint
         Process.kill(:TERM, child_pid)
         Process.waitpid(child_pid)
         self.child_pid = nil
+        on_stopped && on_stopped.call(self)
       end
     end
   end

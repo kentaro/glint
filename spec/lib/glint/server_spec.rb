@@ -73,5 +73,39 @@ module Glint
         expect(server.child_pid).to be_nil
       }
     end
+
+    describe '#on_stopped' do
+      let!(:result) { false }
+      let(:server) {
+        server = Glint::Server.new do |port|
+          exec File.expand_path("../../../bin/server.rb", __FILE__), port.to_s
+        end
+        server.start
+        server
+      }
+
+      context 'when `on_stopped` is set' do
+        before {
+          server.on_stopped = ->(s) {
+            s.instance_variable_set(:@_stopped, true)
+          }
+          server.stop
+        }
+
+        it {
+          expect(server.instance_variable_get(:@_stopped)).to be true
+        }
+      end
+
+      context 'when `on_stopped` is not set' do
+        before {
+          server.stop
+        }
+
+        it {
+          expect(server.instance_variable_get(:@_stopped)).to be nil
+        }
+      end
+    end
   end
 end
