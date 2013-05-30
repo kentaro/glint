@@ -4,6 +4,10 @@ module Glint
   class Server
     attr_accessor :port, :block, :pid, :child_pid, :on_stopped
 
+    def self.info
+      @@info ||= {}
+    end
+
     def initialize(port = nil, opts = {}, &block)
       unless block_given?
         raise ArgumentError.new('block is not given')

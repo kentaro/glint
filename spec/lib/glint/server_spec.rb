@@ -2,6 +2,26 @@ require_relative '../../spec_helper'
 
 module Glint
   describe Server do
+    describe '.info' do
+      context 'when no info set' do
+        it { expect(Glint::Server.info).to be == {} }
+      end
+
+      context 'when a value via the method' do
+        before {
+          Glint::Server.info['foo'] = 'bar'
+          Glint::Server.info['baz'] = 'qux'
+        }
+
+        it {
+          expect(Glint::Server.info).to be == {
+            'foo' => 'bar',
+            'baz' => 'qux',
+          }
+        }
+      end
+    end
+
     describe '.new' do
       context 'when block is given' do
         context 'and a port is passed in' do
