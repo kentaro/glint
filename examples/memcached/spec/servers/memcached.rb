@@ -1,5 +1,5 @@
 server = Glint::Server.new do |port|
-  exec '/usr/bin/memcached', '-p', port.to_s;
+  exec 'memcached', '-p', port.to_s;
   exit 0
 end
 server.on_stopped = ->(s) { puts 'memcached stopped!' }
