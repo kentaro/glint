@@ -4,7 +4,7 @@ Glint is a library which allows you to fire arbitrary TCP server processes progr
 
 It's useful when you want to test your code against real TCP server processes.
 
-## Usage
+## Synopsis
 
 ```ruby
 server = Glint::Server.new do |port|
@@ -19,6 +19,42 @@ client.do_something
 
 exit
 # The process executed above will be shutdown here.
+```
+
+## Methods
+
+### Glint::Server
+
+#### Glint::Server.info
+
+server.rb:
+
+```
+server = Glint::Server.new do |port|
+  exec 'memcached', '-p', port.to_s;
+  exit 0
+end
+server.start
+
+Glint::Server.info[:memcached] = "127.0.0.1:#{server.port}"
+```
+
+client.rb:
+
+```
+client = Dalli::Client.new(Glint::Server.info[:memcached])
+```
+
+`Glint::Server.info` is used to store server info globally which is retrieved and utilized by client later. It's useful when server and client codes are not in the same code.
+
+#### Glint::Server#start
+
+```
+server = Glint::Server.new do |port|
+  exec 'memcached', '-p', port.to_s;
+  exit 0
+end
+server.start
 ```
 
 ## Installation
