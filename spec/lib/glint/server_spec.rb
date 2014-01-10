@@ -78,20 +78,63 @@ module Glint
     end
 
     describe '#stop' do
-      let(:server) {
-        server = Glint::Server.new do |port|
-          exec File.expand_path("../../../bin/server.rb", __FILE__), port.to_s
-        end
-        server.start
-        server
-      }
-      let(:child_pid) { server.child_pid }
+      context "when normal process" do
+        let(:server) {
+          server = Glint::Server.new do |port|
+            exec File.expand_path("../../../bin/server.rb", __FILE__), port.to_s
+          end
+          server.start
+          server
+        }
+        let(:child_pid) { server.child_pid }
 
-      before { server.stop }
+        before { server.stop }
 
-      it {
-        expect(server.child_pid).to be_nil
-      }
+        it {
+          expect(server.child_pid).to be_nil
+        }
+      end
+
+      context "when process which traps SIGTERM" do
+        let(:server) {
+          server = Glint::Server.new(nil, { timeout: 0.1 }) do |port|
+            require "socket"
+            Signal.trap(:SIGTERM) { }
+            server = TCPServer.new(port)
+            1 while server.accept
+          end
+          server.start
+          server
+        }
+        let(:child_pid) { server.child_pid }
+
+        before { server.stop }
+
+        it {
+          expect(server.child_pid).to be_nil
+        }
+      end
+
+      context "when process which traps SIGTERM and SIGINT" do
+        let(:server) {
+          server = Glint::Server.new(nil, { timeout: 0.1 }) do |port|
+            require "socket"
+            Signal.trap(:SIGTERM) { }
+            Signal.trap(:SIGINT) { }
+            server = TCPServer.new(port)
+            1 while server.accept
+          end
+          server.start
+          server
+        }
+        let(:child_pid) { server.child_pid }
+
+        before { server.stop }
+
+        it {
+          expect(server.child_pid).to be_nil
+        }
+      end
     end
 
     describe '#on_stopped' do
