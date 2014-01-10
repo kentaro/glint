@@ -29,6 +29,7 @@ module Glint
       end
 
       Util.wait_port(port)
+      self
     end
 
     def stop

@@ -70,9 +70,9 @@ module Glint
           exec File.expand_path("../../../bin/server.rb", __FILE__), port.to_s
         end
       }
-      before { server.start }
 
       it {
+        expect(server.start).to equal(server)
         expect(server.child_pid).to be_true
       }
     end
