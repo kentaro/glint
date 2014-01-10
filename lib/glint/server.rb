@@ -1,4 +1,5 @@
 require_relative 'util.rb'
+require "timeout"
 
 module Glint
   class Server
@@ -14,6 +15,7 @@ module Glint
       end
 
       @port  = port || Util.empty_port
+      @opts  = { timeout: 1, signals: [:TERM, :INT, :KILL] }.merge(opts)
       @block = block
       @pid   = Process.pid
 
@@ -31,8 +33,15 @@ module Glint
 
     def stop
       if pid == Process.pid && child_pid
-        Process.kill(:TERM, child_pid)
-        Process.waitpid(child_pid)
+        signals = @opts[:signals].clone
+        begin
+          Process.kill(signals.shift, child_pid)
+          timeout(@opts[:timeout]) do
+            Process.waitpid(child_pid)
+          end
+        rescue Timeout::Error => e
+          retry
+        end
         self.child_pid = nil
         on_stopped && on_stopped.call(self)
       end
