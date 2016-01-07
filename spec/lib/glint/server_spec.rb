@@ -73,7 +73,7 @@ module Glint
 
       it {
         expect(server.start).to equal(server)
-        expect(server.child_pid).to be_true
+        expect(server.child_pid).to be_truthy
       }
     end
 
