@@ -40,7 +40,7 @@ module Glint
           Timeout.timeout(@opts[:timeout]) do
             Process.waitpid(child_pid)
           end
-        rescue Timeout::Error => e
+        rescue Timeout::Error
           retry
         end
         self.child_pid = nil
